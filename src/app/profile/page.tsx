@@ -4,6 +4,7 @@ import { ConnectButton } from '@/components/ConnectButton'
 import { Container, Layout } from '@/components/templates'
 import { Auth0Provider } from '@auth0/auth0-react';
 import { LoginButton } from '@/components/login'
+import { LogoutButton } from '@/components/logout';
 
 export default function Page() {
   return (
@@ -20,6 +21,7 @@ export default function Page() {
     <Container as="main" $variant="flexVerticalCenter">
         <ConnectButton />
         <LoginButton />
+        <LogoutButton />
       </Container>
   </Auth0Provider>
       

@@ -14,11 +14,10 @@ const StyledButton = styled(Button)`
 `
 
 export function LogoutButton() {
-    const { loginWithRedirect } = useAuth0();
-    
+    const { logout } = useAuth0();    
     return (
-        <StyledButton shape="rounded" onClick={() => loginWithRedirect()}>
-          Log in
+        <StyledButton shape="rounded" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+          Log out
         </StyledButton>
       )
 };
