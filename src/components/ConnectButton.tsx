@@ -4,7 +4,10 @@ import styled, { css } from 'styled-components'
 import { useDisconnect } from 'wagmi'
 import { useEnsName } from 'wagmi';
 import { useEnsAvatar } from "wagmi";
-import { useRecords } from "ens-tools/react";
+import { useEnsText } from 'wagmi'
+import { normalize } from 'viem/ens'
+
+
 
 
 const StyledButton = styled(Button)`
@@ -40,13 +43,12 @@ export function ConnectButton() {
           name: ensName as string,
         });
 
-        const { data } = useRecords({
-          name: ensName,
-          records: ["com.twitter", "com.github", "description", "avatar", "test-1"],
-          normalize: true,
-      });
+        const { data } = useEnsText({
+          name: normalize(ensName as string),
+          key: 'test-1',
+        })
 
-        console.log(ensName)
+        console.log(data)
         return (
           <div
             {...(!ready && {
@@ -99,11 +101,12 @@ export function ConnectButton() {
                     },
                   ]}
                 />
-                {data.map((record) => (
-                    <div key={record.key}>
-                        {record.key}: {record.value}
-                    </div>
-                ))}
+                <div>
+                tomatoes <br />
+                {data} <br />
+                pikachu
+                </div>
+                 
                 </div>
                 
 
