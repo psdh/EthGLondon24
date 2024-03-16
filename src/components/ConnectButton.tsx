@@ -2,6 +2,10 @@ import { Button, Profile, mq } from '@ensdomains/thorin'
 import { ConnectButton as ConnectButtonBase } from '@rainbow-me/rainbowkit'
 import styled, { css } from 'styled-components'
 import { useDisconnect } from 'wagmi'
+import { useEnsName } from 'wagmi';
+import { useEnsAvatar } from "wagmi";
+import { useRecords } from "ens-tools/react";
+
 
 const StyledButton = styled(Button)`
   ${({ theme }) => css`
@@ -28,7 +32,21 @@ export function ConnectButton() {
       }) => {
         const ready = mounted
         const connected = ready && account && chain
+        const { data: ensName } = useEnsName({
+          address: account.address as `0x${string}`,
+        });
 
+        const { data: ensAvatar } = useEnsAvatar({
+          name: ensName as string,
+        });
+
+        const { data } = useRecords({
+          name: ensName,
+          records: ["com.twitter", "com.github", "description", "avatar", "test-1"],
+          normalize: true,
+      });
+
+        console.log(ensName)
         return (
           <div
             {...(!ready && {
@@ -60,12 +78,13 @@ export function ConnectButton() {
                   </StyledButton>
                 )
               }
-
+              console.log(account)
               return (
-                <Profile
+                <div>
+                  <Profile
                   address={account.address}
-                  ensName={account.ensName || undefined}
-                  avatar={account.ensAvatar || undefined}
+                  ensName={account.ensName || ensName || undefined}
+                  avatar={account.ensAvatar || ensAvatar || undefined}
                   onClick={openAccountModal}
                   dropdownItems={[
                     {
@@ -80,6 +99,14 @@ export function ConnectButton() {
                     },
                   ]}
                 />
+                {data.map((record) => (
+                    <div key={record.key}>
+                        {record.key}: {record.value}
+                    </div>
+                ))}
+                </div>
+                
+
               )
             })()}
           </div>
