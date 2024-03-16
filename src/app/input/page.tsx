@@ -15,7 +15,7 @@ export default function Page() {
   // Resolve potential ENS names (dot separated strings)
   const { data: ensAddress, isLoading: ensAddressIsLoading } = useEnsAddress({
     name: debouncedInput.includes('.') ? debouncedInput : undefined,
-    chainId: 1,
+    chainId: 11155111, // TODO This requires a manual change. Most likely a bug with the chainID hook here
   })
 
   // Set the address (address if provided directly or resolved address from ENS name)
