@@ -23,7 +23,7 @@ const StyledButton = styled(Button)`
 
 export function ConnectButton() {
   const { disconnect } = useDisconnect()
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
 
   
   return (
@@ -52,6 +52,7 @@ export function ConnectButton() {
         })
         console.log("alphasod", user)
         console.log(data)
+        console.log("isAuthenticated", isAuthenticated)  
         return (
           <div
             {...(!ready && {
