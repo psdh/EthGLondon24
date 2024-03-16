@@ -6,6 +6,7 @@ import { useEnsName } from 'wagmi';
 import { useEnsAvatar } from "wagmi";
 import { useEnsText } from 'wagmi'
 import { normalize } from 'viem/ens'
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
@@ -22,7 +23,9 @@ const StyledButton = styled(Button)`
 
 export function ConnectButton() {
   const { disconnect } = useDisconnect()
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
+  
   return (
     <ConnectButtonBase.Custom>
       {({
@@ -47,7 +50,7 @@ export function ConnectButton() {
           name: normalize(ensName as string),
           key: 'test-1',
         })
-
+        console.log("alphasod", user)
         console.log(data)
         return (
           <div
